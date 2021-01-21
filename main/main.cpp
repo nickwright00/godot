@@ -1126,14 +1126,6 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 	}
 #endif
 
-	GLOBAL_DEF("logging/file_logging/enable_file_logging", false);
-	// Only file logging by default on desktop platforms as logs can't be
-	// accessed easily on mobile/Web platforms (if at all).
-	// This also prevents logs from being created for the editor instance, as feature tags
-	// are disabled while in the editor (even if they should logically apply).
-	GLOBAL_DEF("logging/file_logging/enable_file_logging.pc", true);
-	GLOBAL_DEF("logging/file_logging/log_path", "user://logs/godot.log");
-	GLOBAL_DEF("logging/file_logging/max_log_files", 5);
 	ProjectSettings::get_singleton()->set_custom_property_info("logging/file_logging/max_log_files",
 			PropertyInfo(Variant::INT,
 					"logging/file_logging/max_log_files",
@@ -1199,11 +1191,6 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 			PropertyInfo(Variant::INT, "display/window/size/height",
 					PROPERTY_HINT_RANGE,
 					"0,4320,or_greater")); // 8K resolution
-	GLOBAL_DEF("display/window/size/resizable", true);
-	GLOBAL_DEF("display/window/size/borderless", false);
-	GLOBAL_DEF("display/window/size/fullscreen", false);
-	GLOBAL_DEF("display/window/size/always_on_top", false);
-	GLOBAL_DEF("display/window/size/test_width", 0);
 	ProjectSettings::get_singleton()->set_custom_property_info("display/window/size/test_width",
 			PropertyInfo(Variant::INT,
 					"display/window/size/test_width",
@@ -1873,9 +1860,6 @@ bool Main::start() {
 				for (int j = i + 2; j < args.size(); j++) {
 					removal_docs.push_back(args[j]);
 				}
-			} else if (args[i] == "--export") {
-				editor = true; //needs editor
-				_export_preset = args[i + 1];
 			} else if (args[i] == "--export-debug") {
 				editor = true; //needs editor
 				_export_preset = args[i + 1];
